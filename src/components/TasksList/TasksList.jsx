@@ -9,7 +9,7 @@ const TasksList = props => {
       <Task checked=" " taskText={props.taskText} /> */}
 
       {props.items.map((item, index) => {
-        return <Task key={index} text={item} id={index} onRemove={props.onRemove} />;
+        return <Task key={item.id} text={item.text} id={item.id} onRemove={props.onRemove} />;
       })}
     </ul>
   );

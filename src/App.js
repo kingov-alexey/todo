@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
 import Header from './components/Header/Header';
@@ -8,14 +8,15 @@ import Footer from './components/Footer/Footer';
 
 function App() {
   const [todoListItems, changeTodoListItems] = useState([
-    'Задача 1',
-    'Задача 2',
-    'Задача 3',
-    'Задача 4',
-    'Задача 5',
+    { id: '01', text: 'задача 1' },
+    { id: '02', text: 'задача 2' },
+    { id: '03', text: 'задача 3' },
+    { id: '04', text: 'задача 4' },
+    { id: '05', text: 'задача 5' },
+    { id: '06', text: 'задача 6' },
   ]);
 
-  //
+  //Очистка текст импут
   const [textInput, changeTextInput] = useState('');
 
   //
@@ -58,13 +59,14 @@ function App() {
         placeholder="Begin write task..."
         onChange={event => changeTextInputHandler(event.target.value)}
         onClickCreate={createHandler}
+        inputValue={textInput}
       />
 
-      <TasksList items={todoListItems} onRemove={removeHandler} taskText="Задача1" />
+      <TasksList items={todoListItems} onRemove={removeHandler} />
 
       <Footer
         copyright="(c) Korolyov Alexey"
-        url="http://www.vkrg.kz/"
+        url="https://github.com/kingov-alexey/todo"
         urlText="Исходные файлы проекта"
       />
     </div>

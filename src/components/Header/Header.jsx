@@ -7,7 +7,11 @@ const Header = props => {
   return (
     <div className={css.header}>
       <h1 onClick={props.onClickClear}>{props.text}</h1>
-      <TextInput placeholder={props.placeholder} onChange={props.onChange} />
+      <TextInput
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        inputValue={props.inputValue}
+      />
       <AddBtn text="ADD" onClick={props.onClickCreate} />
     </div>
   );

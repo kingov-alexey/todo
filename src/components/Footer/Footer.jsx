@@ -5,7 +5,7 @@ const Footer = props => {
   return (
     <div className={css.style}>
       <div>{props.copyright}</div>
-      <a href={props.url} target="_blank">
+      <a href={props.url} target="_blank" rel="noopener noreferrer">
         {props.urlText}
       </a>
     </div>
