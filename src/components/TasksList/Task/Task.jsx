@@ -4,15 +4,12 @@ import css from './Task.module.css';
 import BtnDelete from './BtnDelete/BtnDelete';
 
 const Task = props => {
-  //console.log('qqq' + props.checked);
-  const [isChecked, changeIsChecked] = useState(false);
-
   const checkedHandler = () => {
-    changeIsChecked(!isChecked);
+    props.onUpdateTaskStatus(props.id);
   };
 
   return (
-    <li className={isChecked ? 'checked' : ''} onClick={checkedHandler}>
+    <li className={props.status ? 'checked' : ''} onClick={checkedHandler}>
       {props.taskText}
       {props.text}
       {/* asdfasdfasdf */}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import './App.css';
 
@@ -7,16 +8,21 @@ import TasksList from './components/TasksList/TasksList';
 import Footer from './components/Footer/Footer';
 
 function App() {
-  const [todoListItems, changeTodoListItems] = useState([
-    { id: '01', text: 'задача 1' },
-    { id: '02', text: 'задача 2' },
-    { id: '03', text: 'задача 3' },
-    { id: '04', text: 'задача 4' },
-    { id: '05', text: 'задача 5' },
-    { id: '06', text: 'задача 6' },
-  ]);
+  const [todoListItems, changeTodoListItems] = useState([]);
 
-  //Очистка текст импут
+  //добавление задачи http://127.0.0.1:8000/api/task
+  //изменение определнной задачи http://127.0.0.1:8000/api/task/2
+  //удаление задачи определенной задачи http://127.0.0.1:8000/api/task/4
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const response = await axios.get('http://127.0.0.1:8000/api/tasks');
+      changeTodoListItems(response.data);
+    };
+    getTasks();
+  }, []);
+
+  //
   const [textInput, changeTextInput] = useState('');
 
   //
@@ -25,20 +31,29 @@ function App() {
   };
 
   //
-  const createHandler = () => {
+  const createHandler = async () => {
     if (!textInput) {
       return;
     }
+    const response = await axios.post('http://127.0.0.1:8000/api/task', {
+      title: textInput,
+    });
+
     const updatedListItems = [...todoListItems];
-    updatedListItems.push(textInput);
+    updatedListItems.push({
+      id: response.data.id,
+      title: response.data.title,
+    });
     changeTodoListItems(updatedListItems);
     changeTextInputHandler('');
   };
 
   //
-  const removeHandler = id => {
-    const updatedListItems = todoListItems.filter((item, index) => {
-      if (id === index) {
+  const removeHandler = async (id, event) => {
+    event.stopPropagation();
+    await axios.delete(`http://127.0.0.1:8000/api/task/${id}`);
+    const updatedListItems = todoListItems.filter(item => {
+      if (id === item.id) {
         return false;
       }
       return true;
@@ -48,21 +63,35 @@ function App() {
   };
 
   //
-  const removeAllHandler = () => {
-    changeTodoListItems([]);
+  const updateTaskStatus = async id => {
+    await axios.put(`http://127.0.0.1:8000/api/task/${id}`, {
+      status: !todoListItems.find(item => item.id === id).status,
+    });
+    const updatedTodoListItems = todoListItems.map(item => {
+      if (item.id === id) {
+        item.status = !item.status;
+      }
+      return item;
+    });
+    changeTodoListItems(updatedTodoListItems);
   };
+
+  console.log(todoListItems);
   return (
     <div className="App">
       <Header
         text="ToDo"
-        onClickClear={removeAllHandler}
         placeholder="Begin write task..."
         onChange={event => changeTextInputHandler(event.target.value)}
         onClickCreate={createHandler}
         inputValue={textInput}
       />
 
-      <TasksList items={todoListItems} onRemove={removeHandler} />
+      <TasksList
+        items={todoListItems}
+        onRemove={removeHandler}
+        onUpdateTaskStatus={updateTaskStatus}
+      />
 
       <Footer
         copyright="(c) Korolyov Alexey"

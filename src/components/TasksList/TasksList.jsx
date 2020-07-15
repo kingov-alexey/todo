@@ -8,8 +8,17 @@ const TasksList = props => {
       {/* <Task checked="checked" taskText={props.taskText} />
       <Task checked=" " taskText={props.taskText} /> */}
 
-      {props.items.map((item, index) => {
-        return <Task key={item.id} text={item.text} id={item.id} onRemove={props.onRemove} />;
+      {props.items.map(item => {
+        return (
+          <Task
+            key={item.id}
+            text={item.title}
+            id={item.id}
+            onRemove={props.onRemove}
+            status={item.status}
+            onUpdateTaskStatus={props.onUpdateTaskStatus}
+          />
+        );
       })}
     </ul>
   );

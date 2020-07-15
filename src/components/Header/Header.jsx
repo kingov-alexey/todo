@@ -6,7 +6,7 @@ import AddBtn from './AddBtn/AddBtn';
 const Header = props => {
   return (
     <div className={css.header}>
-      <h1 onClick={props.onClickClear}>{props.text}</h1>
+      <h1>{props.text}</h1>
       <TextInput
         placeholder={props.placeholder}
         onChange={props.onChange}
