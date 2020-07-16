@@ -4,10 +4,16 @@ import css from './Footer.module.css';
 const Footer = props => {
   return (
     <div className={css.style}>
-      <div>{props.copyright}</div>
-      <a href={props.url} target="_blank" rel="noopener noreferrer">
-        {props.urlText}
+      <a href={props.urlFrontend} target="_blank" rel="noopener noreferrer">
+        {props.urlTextFrontend}
       </a>
+      <br />
+      <a href={props.urlBackend} target="_blank" rel="noopener noreferrer">
+        {props.urlTextBackend}
+      </a>
+      <br />
+      <br />
+      <div>{props.copyright}</div>
     </div>
   );
 };

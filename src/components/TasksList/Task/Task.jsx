@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-
-import css from './Task.module.css';
+import React from 'react';
 import BtnDelete from './BtnDelete/BtnDelete';
 
+//обновление статуса задачи
 const Task = props => {
   const checkedHandler = () => {
     props.onUpdateTaskStatus(props.id);
@@ -12,7 +11,7 @@ const Task = props => {
     <li className={props.status ? 'checked' : ''} onClick={checkedHandler}>
       {props.taskText}
       {props.text}
-      {/* asdfasdfasdf */}
+
       <BtnDelete onClick={props.onRemove.bind(null, props.id)} />
     </li>
   );
